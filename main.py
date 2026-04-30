@@ -21,9 +21,9 @@ def curses_main(w, words):
 
         key = w.getch()
 
-        if key == curses.KEY_LEFT and i != 0:
+        if (key == curses.KEY_LEFT or key == ord("h")) and i != 0:
             i -= 1
-        if key == curses.KEY_RIGHT and i != len(words) - 1:
+        if (key == curses.KEY_RIGHT or key == ord("l")) and i != len(words) - 1:
             i += 1
         if key == ord("q"):
             exit()
