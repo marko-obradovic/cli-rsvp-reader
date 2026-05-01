@@ -1,4 +1,5 @@
 import curses
+import time
 
 
 def split_words(text: str) -> list[str]:
@@ -14,8 +15,18 @@ def main() -> None:
     curses.wrapper(curses_main, words)
 
 
+def save_book_location(i: int) -> None:
+    with open("save.txt", "w") as f:
+        f.write(str(i))
+
+
 def curses_main(w, words):
-    i = 0
+    try:
+        with open("save.txt", "r") as f:
+            i = int(f.read())
+    except FileNotFoundError:
+        i = 0
+
     while True:
         w.addstr(curses.LINES // 2, curses.COLS // 2 - len(words[i]), words[i])
 
@@ -27,7 +38,7 @@ def curses_main(w, words):
             i += 1
         if key == ord("q"):
             exit()
-
+        save_book_location(i)
         w.clear()
 
     w.addstr("\nPress q to exit...")
