@@ -1,5 +1,4 @@
 import curses
-import time
 
 
 def split_words(text: str) -> list[str]:
@@ -21,6 +20,8 @@ def save_book_location(i: int) -> None:
 
 
 def curses_main(w, words):
+    curses.curs_set(0)
+
     try:
         with open("save.txt", "r") as f:
             i = int(f.read())
@@ -28,7 +29,10 @@ def curses_main(w, words):
         i = 0
 
     while True:
-        w.addstr(curses.LINES // 2, curses.COLS // 2 - len(words[i]), words[i])
+        x = curses.COLS // 2 - len(words[i]) // 2
+        y = curses.LINES // 2
+
+        w.addstr(y, x, words[i])
 
         key = w.getch()
 
